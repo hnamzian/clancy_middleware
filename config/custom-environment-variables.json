@@ -18,13 +18,9 @@
         "gasPrice": "QKMS_CLANCY_GAS_PRICE"
       }
     },
-    "accounts": {
-      "accounts": [
-        {
-          "private_key": "ADMIN_ACCOUNT_PRIV_KEY",
-          "address": "ADMIN_ACCOUNT_ADDRESS"
-        }
-      ]
+    "account": {
+      "private_key": "ADMIN_ACCOUNT_PRIV_KEY",
+      "address": "ADMIN_ACCOUNT_ADDRESS"
     }
   },
   "clancy": {

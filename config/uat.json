@@ -17,12 +17,8 @@
       }
     },
     "accounts": {
-      "accounts": [
-        {
-          "private_key": "",
-          "address": ""
-        }
-      ]
+      "private_key": "",
+      "address": ""
     }
   }
 }
