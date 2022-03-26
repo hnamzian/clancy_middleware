@@ -64,3 +64,8 @@ export class QkmsAccount {
     return result;
   };
 }
+
+export interface QkmsAccountConfig {
+  privateKey: string,
+  address: string,
+}

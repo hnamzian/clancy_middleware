@@ -4,6 +4,7 @@ import { WinstonModule } from 'nest-winston';
 import { HttpLoggerMiddleware } from './core/http-logger.ts/http-logger.middleware';
 import { WinstonConfigs } from './config/winston.config';
 import { CoreModule } from './core/core.module';
+import { ClancyModule } from './clancy/clancy.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CoreModule } from './core/core.module';
     }),
     WinstonModule.forRoot(WinstonConfigs),
     CoreModule,
+    ClancyModule
   ],
   controllers: [],
   providers: [],
