@@ -2,11 +2,11 @@
   "server": {},
   "qkms": {
     "adapter": {
-      "host": "https://35.158.41.164:8080",
+      "host": "https://3.96.178.64:8080",
       "tls": {
-        "caCertPath": "./store/tls/qkms-prod/ca.crt",
-        "tlsCertPath": "./store/tls/qkms-prod/tls.crt",
-        "tlsKeyPath": "./store/tls/qkms-prod/tls.key"
+        "caCertPath": "./store/tls/qkms-uat/ca.crt",
+        "tlsCertPath": "./store/tls/qkms-uat/tls.crt",
+        "tlsKeyPath": "./store/tls/qkms-uat/tls.key"
       }
     },
     "nodes": {

@@ -1,5 +1,34 @@
 {
   "server": {
     "port": "SERVER_PORT"
+  },
+  "qkms": {
+    "adapter": {
+      "host": "QKMS_ADAPTER_HOST",
+      "tls": {
+        "caCertPath": "QKMS_TLS_CA",
+        "tlsCertPath": "QKMS_TLS_CERT",
+        "tlsKeyPath": "QKMS_TLS_KEY"
+      }
+    },
+    "nodes": {
+      "clancy": {
+        "node": "QKMS_CLANCY_NODE",
+        "gas": "QKMS_CLANCY_GAS",
+        "gasPrice": "QKMS_CLANCY_GAS_PRICE"
+      }
+    },
+    "accounts": {
+      "accounts": [
+        {
+          "private_key": "ADMIN_ACCOUNT_PRIV_KEY",
+          "address": "ADMIN_ACCOUNT_ADDRESS"
+        }
+      ]
+    }
+  },
+  "clancy": {
+    "abiPath": "CLANCY_ABI_PATH",
+    "address": "CLANCY_CONTRACT_ADDRESS"
   }
 }

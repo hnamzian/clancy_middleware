@@ -27,5 +27,34 @@
     "description": "Clancy APIs",
     "version": "1.0.0",
     "tag": "CLANCY-MW"
+  },
+  "qkms": {
+    "adapter": {
+      "host": "",
+      "tls": {
+        "caCertPath": "",
+        "tlsCertPath": "",
+        "tlsKeyPath": ""
+      }
+    },
+    "nodes": {
+      "clancy": {
+        "node": "clancy",
+        "gas": "0x6691B7",
+        "gasPrice": "0x4A817C800"
+      }
+    },
+    "accounts": {
+      "accounts": [
+        {
+          "private_key": "",
+          "address": ""
+        }
+      ]
+    }
+  },
+  "clancy": {
+    "abiPath": "./store/contracts/clancy/ClancyNFT.json",
+    "address": ""
   }
 }
