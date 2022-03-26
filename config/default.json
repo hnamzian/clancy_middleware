@@ -1,0 +1,31 @@
+{
+  "server": {
+    "port": "3000"
+  },
+  "logs": {
+    "error": {
+      "dir": "logs/exceptions.log",
+      "maxFiles": 5,
+      "maxsize": 1000000
+    },
+    "debug": {
+      "dir": "logs/debug.log",
+      "maxFiles": 5,
+      "maxsize": 1000000
+    }
+  },
+  "httpLogger": {
+    "storage": {
+      "file": {
+        "path": "logs/http",
+        "maxsize": 1000000
+      }
+    }
+  },
+  "swagger": {
+    "title": "Clancy Middleware",
+    "description": "Clancy APIs",
+    "version": "1.0.0",
+    "tag": "CLANCY-MW"
+  }
+}

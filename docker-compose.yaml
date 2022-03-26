@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  middleware:
+    build: .
+    image: clancy-middleware
+    container_name: clancy-middleware
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      SERVER_PORT: 3000
+    volumes:  
+      - ./logs/:/usr/src/app/logs
+      - ./locale:/usr/src/locale
+      - ./logs/unhandled.log:/usr/src/app/logs/unhandled.log
+    networks:
+      - clancy
+networks:
+  clancy:
+    driver: bridge
+    name: clancy
