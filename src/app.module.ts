@@ -5,6 +5,7 @@ import { HttpLoggerMiddleware } from './core/http-logger.ts/http-logger.middlewa
 import { WinstonConfigs } from './config/winston.config';
 import { CoreModule } from './core/core.module';
 import { ClancyModule } from './clancy/clancy.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { ClancyModule } from './clancy/clancy.module';
     }),
     WinstonModule.forRoot(WinstonConfigs),
     CoreModule,
-    ClancyModule
+    ClancyModule,
+    UserModule
   ],
   controllers: [],
   providers: [],
