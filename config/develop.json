@@ -1,0 +1,26 @@
+{
+    "server": {},
+    "db": {},
+    "qkms": {
+      "adapter": {
+        "host": "https://3.96.178.64:8080",
+        "tls": {
+          "caCertPath": "./store/tls/qkms-uat/ca.crt",
+          "tlsCertPath": "./store/tls/qkms-uat/tls.crt",
+          "tlsKeyPath": "./store/tls/qkms-uat/tls.key"
+        }
+      },
+      "nodes": {
+        "clancy": {
+          "node": "clancy",
+          "gas": "0x6691B7",
+          "gasPrice": "0x4A817C800"
+        }
+      },
+      "accounts": {
+        "private_key": "",
+        "address": ""
+      }
+    }
+  }
+  

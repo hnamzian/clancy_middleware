@@ -2,6 +2,12 @@
   "server": {
     "port": "3000"
   },
+  "db": {
+    "type": "postgres",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "synchronize": true
+  },
   "logs": {
     "error": {
       "dir": "logs/exceptions.log",

@@ -6,6 +6,8 @@ import { WinstonConfigs } from './config/winston.config';
 import { CoreModule } from './core/core.module';
 import { ClancyModule } from './clancy/clancy.module';
 import { UserModule } from './user/user.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmConfig } from './config/typeorm-pg.config';
 
 @Module({
   imports: [
@@ -17,10 +19,11 @@ import { UserModule } from './user/user.module';
         path: './locale/',
       },
     }),
+    TypeOrmModule.forRoot(TypeOrmConfig),
     WinstonModule.forRoot(WinstonConfigs),
     CoreModule,
     ClancyModule,
-    UserModule
+    UserModule,
   ],
   controllers: [],
   providers: [],
