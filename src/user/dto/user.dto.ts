@@ -8,7 +8,7 @@ export class GetUserDto {
     example: '1'
   })
   @IsString()
-  id: string
+  userId: string
 }
 
 export class CreateUserDto {
@@ -44,5 +44,5 @@ export class DeleteUserDto {
     example: '1'
   })
   @IsString()
-  id: string
+  userId: string
 }
