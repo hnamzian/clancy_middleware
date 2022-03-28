@@ -3,10 +3,10 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { NotFoundError } from 'rxjs';
 import { CreateUserDto } from './dto/user.dto';
 import { User } from './user.entity';
 import { UserRepository } from './user.repository';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserProvider {
@@ -17,6 +17,8 @@ export class UserProvider {
     if (!user) {
       throw new NotFoundException('User Not Found');
     }
+
+    delete user.password;
     return user;
   };
 
@@ -29,7 +31,7 @@ export class UserProvider {
 
     const userData = {
       username: createUserDto.username,
-      password: createUserDto.password,
+      password: this.hashPassword(createUserDto.password),
       isAdmin: createUserDto.isAdmin,
       isVerified: false,
     } as User;
@@ -37,6 +39,7 @@ export class UserProvider {
     const user = this.userRepository.create(userData);
     await user.save();
 
+    delete user.password;
     return user;
   };
 
@@ -47,4 +50,10 @@ export class UserProvider {
     }
     return result;
   };
+
+  private hashPassword(password: string) {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    return hash;
+  }
 }

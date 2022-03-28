@@ -4,8 +4,7 @@ import {
   Delete,
   Get,
   Param,
-  Post,
-  Put,
+  Post
 } from '@nestjs/common';
 import { ApiBody, ApiParam } from '@nestjs/swagger';
 import { CreateUserDto, DeleteUserDto, GetUserDto } from './dto/user.dto';
