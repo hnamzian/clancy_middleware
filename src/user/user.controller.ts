@@ -17,6 +17,7 @@ export class UserController {
 
   @Get('/:userId')
   @ApiParam({ name: 'userId', type: 'string' })
+  @Roles('ADMIN')
   async getUser(@Param() getUserDto: GetUserDto) {
     // let user: Omit<User, 'username'>;
     const user = await this.userProvider.getUserById(+getUserDto.userId);
@@ -33,6 +34,7 @@ export class UserController {
 
   @ApiParam({ name: 'userId', type: 'string' })
   @Delete('/:userId')
+  @Roles('ADMIN')
   async deleteUser(@Param() deleteUserDto: DeleteUserDto) {
     await this.userProvider.deleteUser(deleteUserDto.userId);
     return {
