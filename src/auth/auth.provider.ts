@@ -3,7 +3,7 @@ import { UserProvider } from 'src/user/user.provider';
 import { LoginDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AccessTokenPayload } from './types/jwtPayload';
-import { User } from 'src/user/user.entity';
+import { User, UserRole } from 'src/user/user.entity';
 
 @Injectable()
 export class AuthProvider {
@@ -11,6 +11,29 @@ export class AuthProvider {
     private readonly userProvider: UserProvider,
     private readonly jwtService: JwtService,
   ) {}
+
+  async onModuleInit() {
+    const admin = await this.createAdmin();
+    console.log(admin);
+  }
+
+  async createAdmin(): Promise<User> {
+    let admin = {
+      username: 'admin',
+      password: 'adminpw',
+      role: UserRole.admin,
+      isVerified: true,
+    } as User;
+    
+    let user = await this.userProvider.getUserByUsername('admin');
+
+    if (!user) {
+      const user = this.userProvider.createUser(admin);
+      return user;
+    }
+
+    return user;
+  }
 
   login = async (loginDto: LoginDto) => {
     const user = await this.userProvider.verifyCredentials(
@@ -29,7 +52,11 @@ export class AuthProvider {
     };
   };
 
-  changePassword = async (oldPassword: string, newPassword: string, user: User) => {
+  changePassword = async (
+    oldPassword: string,
+    newPassword: string,
+    user: User,
+  ) => {
     await this.userProvider.updatePassword(user.id, oldPassword, newPassword);
-  }
+  };
 }

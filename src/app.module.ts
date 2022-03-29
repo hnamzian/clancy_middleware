@@ -10,6 +10,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfig } from './config/typeorm-pg.config';
 import { AuthModule } from './auth/auth.module';
 import { AuthMiddleware } from './auth/middleware/auth.middleware';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/guard/role.guard';
 
 @Module({
   imports: [
@@ -29,7 +31,12 @@ import { AuthMiddleware } from './auth/middleware/auth.middleware';
     AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer): void {

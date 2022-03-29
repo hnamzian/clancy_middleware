@@ -21,6 +21,10 @@ export class UserProvider {
     return user;
   };
 
+  getUserByUsername = async (username: string) => {
+    return await this.userRepository.findOne({ username });
+  };
+
   createUser = async (createUserDto: CreateUserDto) => {
     if (
       await this.userRepository.findOne({ username: createUserDto.username })
@@ -32,7 +36,7 @@ export class UserProvider {
       username: createUserDto.username,
       password: this.hashPassword(createUserDto.password),
       role: createUserDto.role,
-      isVerified: false,
+      isVerified: createUserDto.isVerified || false,
     } as User;
 
     const user = this.userRepository.create(userData);
@@ -52,7 +56,7 @@ export class UserProvider {
     user.password = this.hashPassword(newPassword);
     user.isVerified = true;
 
-    await user.save()
+    await user.save();
   };
 
   deleteUser = async (userId) => {

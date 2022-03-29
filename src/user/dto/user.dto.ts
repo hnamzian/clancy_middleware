@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsEnum, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
 import { UserRole } from '../user.entity';
 
 export class GetUserDto {
@@ -36,6 +36,15 @@ export class CreateUserDto {
   })
   @IsEnum(UserRole)
   role: UserRole;
+
+  @ApiProperty({
+    type: Boolean,
+    description: 'User is Verified',
+    example: false,
+  })
+  @IsOptional()
+  @IsBoolean()
+  isVerified: boolean;
 }
 
 export class DeleteUserDto {

@@ -7,8 +7,8 @@ import {
   Post
 } from '@nestjs/common';
 import { ApiBody, ApiParam } from '@nestjs/swagger';
+import { Roles } from 'src/auth/decorator/roles.decorator';
 import { CreateUserDto, DeleteUserDto, GetUserDto } from './dto/user.dto';
-import { User } from './user.entity';
 import { UserProvider } from './user.provider';
 
 @Controller('user')
@@ -24,8 +24,9 @@ export class UserController {
     return user;
   }
 
-  @Post('/')
   @ApiBody({ type: CreateUserDto })
+  @Post('/')
+  @Roles('ADMIN')
   async createUser(@Body() createUserDto: CreateUserDto) {
     return await this.userProvider.createUser(createUserDto);
   }
