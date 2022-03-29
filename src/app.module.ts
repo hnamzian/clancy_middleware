@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { I18nModule, I18nJsonParser } from 'nestjs-i18n';
 import { WinstonModule } from 'nest-winston';
 import { HttpLoggerMiddleware } from './core/http-logger.ts/http-logger.middleware';
@@ -8,6 +8,8 @@ import { ClancyModule } from './clancy/clancy.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfig } from './config/typeorm-pg.config';
+import { AuthModule } from './auth/auth.module';
+import { AuthMiddleware } from './auth/middleware/auth.middleware';
 
 @Module({
   imports: [
@@ -24,6 +26,7 @@ import { TypeOrmConfig } from './config/typeorm-pg.config';
     CoreModule,
     ClancyModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
@@ -31,5 +34,8 @@ import { TypeOrmConfig } from './config/typeorm-pg.config';
 export class AppModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(HttpLoggerMiddleware).forRoutes('*');
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
   }
 }

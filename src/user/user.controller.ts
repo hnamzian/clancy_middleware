@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { ApiBody, ApiParam } from '@nestjs/swagger';
 import { CreateUserDto, DeleteUserDto, GetUserDto } from './dto/user.dto';
+import { User } from './user.entity';
 import { UserProvider } from './user.provider';
 
 @Controller('user')
@@ -17,7 +18,10 @@ export class UserController {
   @Get('/:userId')
   @ApiParam({ name: 'userId', type: 'string' })
   async getUser(@Param() getUserDto: GetUserDto) {
-    return await this.userProvider.getUserById(+getUserDto.userId);
+    // let user: Omit<User, 'username'>;
+    const user = await this.userProvider.getUserById(+getUserDto.userId);
+    // delete user.password
+    return user;
   }
 
   @Post('/')

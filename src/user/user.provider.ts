@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/user.dto';
 import { User } from './user.entity';
@@ -17,8 +18,6 @@ export class UserProvider {
     if (!user) {
       throw new NotFoundException('User Not Found');
     }
-
-    delete user.password;
     return user;
   };
 
@@ -43,6 +42,19 @@ export class UserProvider {
     return user;
   };
 
+  updatePassword = async (userId, oldPassword, newPassword) => {
+    const user = await this.getUserById(userId);
+
+    if (!this.comparePassword(user.password, oldPassword)) {
+      throw new UnauthorizedException();
+    }
+
+    user.password = this.hashPassword(newPassword);
+    user.isVerified = true;
+
+    await user.save()
+  };
+
   deleteUser = async (userId) => {
     const result = await this.userRepository.delete({ id: userId });
     if (!result.affected) {
@@ -51,9 +63,26 @@ export class UserProvider {
     return result;
   };
 
+  verifyCredentials = async (username: string, password: string) => {
+    const user = await this.userRepository.findOne({ username });
+    if (!user) {
+      throw new NotFoundException('User Not Found');
+    }
+
+    if (!(await this.comparePassword(user.password, password))) {
+      throw new UnauthorizedException();
+    }
+
+    return user;
+  };
+
   private hashPassword(password: string) {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
     return hash;
+  }
+
+  private async comparePassword(hashedPassword: string, rawPassword: string) {
+    return await bcrypt.compare(rawPassword, hashedPassword);
   }
 }
