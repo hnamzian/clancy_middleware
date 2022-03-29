@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsString } from 'class-validator';
+import { UserRole } from '../user.entity';
 
 export class GetUserDto {
   @ApiProperty({
     type: String,
     description: 'user id',
-    example: '1'
+    example: '1',
   })
   @IsString()
-  userId: string
+  userId: string;
 }
 
 export class CreateUserDto {
@@ -29,20 +30,20 @@ export class CreateUserDto {
   password: string;
 
   @ApiProperty({
-    type: String,
-    description: 'Is User Admin?',
-    example: false,
+    enum: UserRole,
+    description: 'User Role',
+    example: UserRole.admin,
   })
-  @IsBoolean()
-  isAdmin: boolean;
+  @IsEnum(UserRole)
+  role: UserRole;
 }
 
 export class DeleteUserDto {
   @ApiProperty({
     type: String,
     description: 'user id',
-    example: '1'
+    example: '1',
   })
   @IsString()
-  userId: string
+  userId: string;
 }

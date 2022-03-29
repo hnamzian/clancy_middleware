@@ -31,7 +31,7 @@ export class UserProvider {
     const userData = {
       username: createUserDto.username,
       password: this.hashPassword(createUserDto.password),
-      isAdmin: createUserDto.isAdmin,
+      role: createUserDto.role,
       isVerified: false,
     } as User;
 
