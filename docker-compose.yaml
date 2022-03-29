@@ -1,5 +1,18 @@
 version: '3.8'
 services:
+  postgres:
+    image: postgres:14-alpine3.15
+    container_name: clancy-pg
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data/:/var/lib/postgresql/data/
+    networks:
+      - clancy
   middleware:
     build: .
     image: clancy-middleware
@@ -15,6 +28,10 @@ services:
       - ./logs/unhandled.log:/usr/src/app/logs/unhandled.log
     networks:
       - clancy
+
+volumes:
+  db-data:
+  
 networks:
   clancy:
     driver: bridge

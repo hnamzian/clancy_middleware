@@ -1,5 +1,13 @@
 {
   "server": {},
+  "jwt": {},
+  "db": {
+    "type": "postgres",
+    "host": "clancy-pg",
+    "port": 5432,
+    "database": "clancy",
+    "synchronize": false
+  },
   "qkms": {
     "adapter": {
       "host": "https://35.158.41.164:8080",
