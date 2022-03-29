@@ -8,6 +8,10 @@
     "port": 5432,
     "synchronize": true
   },
+  "jwt": {
+    "secret": "weakSecret",
+    "expiration": "600s"
+  },
   "logs": {
     "error": {
       "dir": "logs/exceptions.log",

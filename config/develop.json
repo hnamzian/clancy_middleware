@@ -1,6 +1,7 @@
 {
     "server": {},
     "db": {},
+    "jwt": {},
     "qkms": {
       "adapter": {
         "host": "https://3.96.178.64:8080",

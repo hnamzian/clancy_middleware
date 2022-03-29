@@ -1,5 +1,6 @@
 {
   "server": {},
+  "jwt": {},
   "db": {
     "type": "postgres",
     "host": "clancy-pg",
