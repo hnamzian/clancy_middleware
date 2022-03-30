@@ -1,14 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
+export enum ClancyRole {
+  admin = 'ADMIN',
+  minter = 'MINTER',
+  pauser = 'PAUSER',
+  presigner = 'PRESIGNER',
+  uriSetter = 'URI_SETTER',
+}
+
 export class GrantRoleDto {
   @ApiProperty({
-    type: String,
+    enum: ClancyRole,
     description: 'Role to be granted',
-    example: '0x...',
+    example: ClancyRole.admin,
   })
   @IsString()
-  role: string;
+  role: ClancyRole;
 
   @ApiProperty({
     type: String,
@@ -21,12 +29,12 @@ export class GrantRoleDto {
 
 export class RevokeRoleDto {
   @ApiProperty({
-    type: String,
+    enum: ClancyRole,
     description: 'Role to be granted',
-    example: '0x...',
+    example: ClancyRole.admin,
   })
   @IsString()
-  role: string;
+  role: ClancyRole;
 
   @ApiProperty({
     type: String,
@@ -59,12 +67,12 @@ export class RemovePresignerDto {
 
 export class GrantBySignatureDto {
   @ApiProperty({
-    type: String,
+    enum: ClancyRole,
     description: 'Role to be granted',
-    example: '0x...',
+    example: ClancyRole.admin,
   })
   @IsString()
-  role: string;
+  role: ClancyRole;
 
   @ApiProperty({
     type: String,
@@ -85,12 +93,12 @@ export class GrantBySignatureDto {
 
 export class HasRoleDto {
   @ApiProperty({
-    type: String,
+    enum: ClancyRole,
     description: 'Role to be granted',
-    example: '0x...',
+    example: ClancyRole.admin,
   })
   @IsString()
-  role: string;
+  role: ClancyRole;
 
   @ApiProperty({
     type: String,

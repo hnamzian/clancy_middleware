@@ -15,6 +15,7 @@ import {
 } from './dto/clancy.dto';
 import { User } from 'src/user/user.entity';
 import { WalletProvider } from 'src/wallet/wallet.provider';
+import { ClancyRoleCOnstants } from './constants/clancy.constants';
 
 @Injectable()
 export class ClancyProvider {
@@ -53,7 +54,7 @@ export class ClancyProvider {
     const result = await this.qkmsContract.sendEthTransaction(
       wallet.address,
       'grantRole',
-      [grantRoleDto.role, grantRoleDto.account],
+      [ClancyRoleCOnstants[grantRoleDto.role], grantRoleDto.account],
       '0x0',
     );
 
@@ -69,7 +70,7 @@ export class ClancyProvider {
     const result = await this.qkmsContract.sendEthTransaction(
       wallet.address,
       'revokeRole',
-      [revokeRoleDto.role, revokeRoleDto.account],
+      [ClancyRoleCOnstants[revokeRoleDto.role], revokeRoleDto.account],
       '0x0',
     );
 
