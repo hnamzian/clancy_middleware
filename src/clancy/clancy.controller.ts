@@ -1,8 +1,9 @@
 import { Controller, Post } from '@nestjs/common';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { ClancyProvider } from './clancy.provider';
 import { GrantBySignatureDto } from './dto/clancy.dto';
 
+@ApiTags('Clancy')
 @Controller('clancy')
 export class ClancyController {
   constructor(private readonly clancyProvide: ClancyProvider) {}

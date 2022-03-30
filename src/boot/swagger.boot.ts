@@ -14,7 +14,7 @@ export const bootSwagger = (app: INestApplication) => {
     .addTag(swaggerConfig.tag)
     .addBearerAuth(
       { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-      'authorization',
+      'access-token',
     )
     .build();
   const document = SwaggerModule.createDocument(app, options);

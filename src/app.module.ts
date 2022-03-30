@@ -12,13 +12,13 @@ import { AuthModule } from './auth/auth.module';
 import { AuthMiddleware } from './auth/middleware/auth.middleware';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guard/role.guard';
+import { WalletModule } from './wallet/wallet.module';
 
 @Module({
   imports: [
     I18nModule.forRoot({
       fallbackLanguage: 'en',
       parser: I18nJsonParser,
-
       parserOptions: {
         path: './locale/',
       },
@@ -29,6 +29,7 @@ import { RolesGuard } from './auth/guard/role.guard';
     ClancyModule,
     UserModule,
     AuthModule,
+    WalletModule,
   ],
   controllers: [],
   providers: [
