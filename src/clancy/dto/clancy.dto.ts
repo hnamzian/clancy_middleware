@@ -40,21 +40,21 @@ export class RevokeRoleDto {
 export class AddPresignerDto {
   @ApiProperty({
     type: String,
-    description: 'Role to be granted',
-    example: '0x...',
+    description: 'Account address',
+    example: '0x7C43CedB4C52262430193d4B0664016A7D0A2e07',
   })
   @IsString()
-  role: string;
+  account: string;
 }
 
 export class RemovePresignerDto {
   @ApiProperty({
     type: String,
-    description: 'Role to be granted',
-    example: '0x...',
+    description: 'Account address',
+    example: '0x7C43CedB4C52262430193d4B0664016A7D0A2e07',
   })
   @IsString()
-  role: string;
+  account: string;
 }
 
 export class GrantBySignatureDto {
