@@ -5,6 +5,15 @@ import * as config from 'config';
 import * as fs from 'fs';
 import { QkmsAccount, QkmsAccountConfig } from 'src/core/qkms/QkmsAccount';
 import { QkmsContract } from 'src/core/qkms/QkmsContract';
+import {
+  AddPresignerDto,
+  GrantBySignatureDto,
+  GrantRoleDto,
+  HasRoleDto,
+  RemovePresignerDto,
+  RevokeRoleDto,
+} from './dto/clancy.dto';
+import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class ClancyProvider {
@@ -34,14 +43,28 @@ export class ClancyProvider {
     );
   }
 
-  grantBySignature = async (grantBySignatureParams) => {
+  async grantRole(grantRoleDto: GrantRoleDto, user: User) {}
+
+  async revokeRole(revokeROleDto: RevokeRoleDto, user: User) {}
+
+  async presigner() {}
+
+  async getPresigner(account: string) {}
+
+  async addPresigner(addPresignerDto: AddPresignerDto, user: User) {}
+
+  async removePresigner(removePresignerDto: RemovePresignerDto, user: User) {}
+
+  grantBySignature = async (grantRoleBySignatureDto, user: User) => {
     const result = await this.qkmsContract.sendEthTransaction(
       this.account.address,
       'grantRoleBySignature',
-      grantBySignatureParams,
+      grantRoleBySignatureDto,
       '0x0',
     );
 
     return result;
   };
+
+  async hasRole(hasRoleDto: HasRoleDto) {}
 }

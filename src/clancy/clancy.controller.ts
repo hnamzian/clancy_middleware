@@ -36,7 +36,7 @@ export class ClancyController {
   @ApiBody({ type: GrantBySignatureDto })
   @Post('/roles/grant-by-signature')
   async grantRoleBySignature(grantRoleBySignatureDto: GrantBySignatureDto, @Req() req) {
-    return await this.clancyProvide.grantBySignature(grantRoleBySignatureDto);
+    return await this.clancyProvide.grantBySignature(grantRoleBySignatureDto, req.user);
   }
 
   // @ApiQuery({ type: HasRoleDto })
