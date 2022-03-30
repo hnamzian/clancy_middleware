@@ -6,11 +6,12 @@ import {
   Param,
   Post
 } from '@nestjs/common';
-import { ApiBody, ApiParam } from '@nestjs/swagger';
+import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorator/roles.decorator';
 import { CreateUserDto, DeleteUserDto, GetUserDto } from './dto/user.dto';
 import { UserProvider } from './user.provider';
 
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private readonly userProvider: UserProvider) {}
