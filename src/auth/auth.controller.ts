@@ -16,8 +16,8 @@ export class AuthController {
   }
 
   @ApiBody({ type: ChangePasswordDto })
-  @Post('/change-password')
   @ApiBearerAuth()
+  @Post('/change-password')
   async changePassword(
     @Body() changePasswordDto: ChangePasswordDto,
     @Req() req: any,

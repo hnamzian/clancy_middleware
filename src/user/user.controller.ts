@@ -6,7 +6,7 @@ import {
   Param,
   Post
 } from '@nestjs/common';
-import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorator/roles.decorator';
 import { CreateUserDto, DeleteUserDto, GetUserDto } from './dto/user.dto';
 import { UserProvider } from './user.provider';
@@ -16,8 +16,9 @@ import { UserProvider } from './user.provider';
 export class UserController {
   constructor(private readonly userProvider: UserProvider) {}
 
-  @Get('/:userId')
   @ApiParam({ name: 'userId', type: 'string' })
+  @ApiBearerAuth('access-token')
+  @Get('/:userId')
   @Roles('ADMIN')
   async getUser(@Param() getUserDto: GetUserDto) {
     // let user: Omit<User, 'username'>;
@@ -27,6 +28,7 @@ export class UserController {
   }
 
   @ApiBody({ type: CreateUserDto })
+  @ApiBearerAuth('access-token')
   @Post('/')
   @Roles('ADMIN')
   async createUser(@Body() createUserDto: CreateUserDto) {
@@ -34,6 +36,7 @@ export class UserController {
   }
 
   @ApiParam({ name: 'userId', type: 'string' })
+  @ApiBearerAuth('access-token')
   @Delete('/:userId')
   @Roles('ADMIN')
   async deleteUser(@Param() deleteUserDto: DeleteUserDto) {
