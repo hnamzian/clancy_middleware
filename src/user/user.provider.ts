@@ -56,7 +56,7 @@ export class UserProvider {
     user.password = this.hashPassword(newPassword);
     user.isVerified = true;
 
-    await user.save();
+    return await user.save();
   };
 
   deleteUser = async (userId) => {
