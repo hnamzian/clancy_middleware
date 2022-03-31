@@ -12,21 +12,49 @@ export class WalletController {
   @ApiBearerAuth('access-token')
   @Get('/list')
   async getWallets(@Req() req) {
-    return await this.walletProvider.getWallets(req.user.id);
+    const wallets = await this.walletProvider.getWallets(req.user.id);
+    return wallets.map((w) => {
+      return {
+        id: w.id,
+        walletName: w.walletName,
+        address: w.address,
+        user: {
+          id: req.user.id,
+        },
+      };
+    });
   }
 
   @ApiParam({ name: 'address', type: String, example: '0x' })
   @ApiBearerAuth('access-token')
   @Get('/address/:address')
   @Roles('ADMIN')
-  async getWalletByAddress(@Param() address: string) {
-    return await this.walletProvider.getWalletByAddress(address);
+  async getWalletByAddress(@Param() walletAddress: string) {
+    const { id, walletName, address, user } =
+      await this.walletProvider.getWalletByAddress(walletAddress);
+    return {
+      id,
+      walletName,
+      address,
+      user: {
+        id: user.id,
+      },
+    };
   }
 
   @ApiBody({ type: CreateWalletDto })
   @ApiBearerAuth('access-token')
   @Post('/')
   async createWallet(@Body() createWalletDto: CreateWalletDto, @Req() req) {
-    return await this.walletProvider.createWallet(createWalletDto, req.user);
+    const { id, walletName, address, user } =
+      await this.walletProvider.createWallet(createWalletDto, req.user);
+    return {
+      id,
+      walletName,
+      address,
+      user: {
+        id: user.id,
+      },
+    };
   }
 }

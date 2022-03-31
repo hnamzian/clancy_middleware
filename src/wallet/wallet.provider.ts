@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { QkmsAccount } from 'src/core/qkms/QkmsAccount';
 import { User } from 'src/user/user.entity';
 import { UserProvider } from 'src/user/user.provider';
@@ -32,23 +32,24 @@ export class WalletProvider {
   }
 
   createWallet = async (createWalletDto: CreateWalletDto, user: User) => {
-    // const { address: walletAddress } = await this.qkmsAccounts.importAccount(
-    //   '0x30a0ef4d34e52a404aafe20d6bddf6b2f9840eec6d54b7fad8bc5e9a55fbf81a',
-    //   "clancy",
-    //   "tag1",
-    //   "tag2"
-    // );
-    const { address: walletAddress } = await this.qkmsAccounts.createAccount(
+    if (await this.walletRepository.findOne({
+      user,
+      walletName: createWalletDto.walletName
+    })) {
+      throw new ConflictException('Wallet with this name already exists')
+    }
+
+    const result = await this.qkmsAccounts.createAccount(
       createWalletDto.walletName,
     );
-    console.log(walletAddress);
-
+    
     const walletData: Wallet = {
       walletName: createWalletDto.walletName,
-      address: walletAddress,
+      address: result.address,
       user,
     } as Wallet;
     const wallet = this.walletRepository.create(walletData);
+    
     return await wallet.save();
   };
 }
