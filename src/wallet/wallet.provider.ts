@@ -11,11 +11,9 @@ import { QkmsAdapter } from 'src/core/qkms/QkmsAdapter';
 export class WalletProvider {
   private qkmsAccounts: QkmsAccount;
 
-  constructor(
-    private readonly walletRepository: WaleltRepository,
-  ) {
+  constructor(private readonly walletRepository: WaleltRepository) {
     const qkmsAdapterConfigs = config.get('qkms.adapter');
-    
+
     const qkmsAdapter = new QkmsAdapter(qkmsAdapterConfigs);
     this.qkmsAccounts = new QkmsAccount(qkmsAdapter);
   }
@@ -24,16 +22,22 @@ export class WalletProvider {
     return await this.walletRepository.find({ user: { id: userId } });
   };
 
+  getWalletByUserId = async (userId: number) => {
+    return await this.walletRepository.findOne({ user: { id: userId } });
+  };
+
   getWalletByAddress = async (walletAddress) => {
-    return await this.walletRepository.findOne({ address: walletAddress })
-  }
+    return await this.walletRepository.findOne({ address: walletAddress });
+  };
 
   createWallet = async (createWalletDto: CreateWalletDto, user: Users) => {
-    if (await this.walletRepository.findOne({
-      user,
-      walletName: createWalletDto.walletName
-    })) {
-      throw new ConflictException('Wallet with this name already exists')
+    if (
+      await this.walletRepository.findOne({
+        user,
+        walletName: createWalletDto.walletName,
+      })
+    ) {
+      throw new ConflictException('Wallet with this name already exists');
     }
 
     const result = await this.qkmsAccounts.createAccount(
@@ -46,7 +50,7 @@ export class WalletProvider {
       user,
     } as Wallet;
     const wallet = this.walletRepository.create(walletData);
-    
+
     return await wallet.save();
   };
 }
