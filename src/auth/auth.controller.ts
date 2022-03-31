@@ -15,13 +15,13 @@ export class AuthController {
   }
 
   @ApiBody({ type: ChangePasswordDto })
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @Post('/change-password')
   async changePassword(
     @Body() changePasswordDto: ChangePasswordDto,
     @Req() req: any,
   ) {
-    this.authProvider.changePassword(
+    return await this.authProvider.changePassword(
       changePasswordDto.oldPassword,
       changePasswordDto.newPassword,
       req.user,

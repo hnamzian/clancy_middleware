@@ -34,6 +34,13 @@ export class AuthProvider {
     newPassword: string,
     user: Users,
   ) => {
-    await this.userProvider.updatePassword(user.id, oldPassword, newPassword);
+    const updatedUser = await this.userProvider.updatePassword(
+      user.id,
+      oldPassword,
+      newPassword,
+    );
+
+    delete updatedUser.password;
+    return updatedUser;
   };
 }
