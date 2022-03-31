@@ -32,7 +32,7 @@ export class CreateUserDto {
   @ApiProperty({
     enum: UserRole,
     description: 'User Role',
-    example: UserRole.admin,
+    example: UserRole.client,
   })
   @IsEnum(UserRole)
   role: UserRole;
