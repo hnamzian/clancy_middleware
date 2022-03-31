@@ -1,6 +1,6 @@
-const https = require("https");
-const axios = require("axios");
-const fs = require("fs");
+const https = require('https');
+const axios = require('axios');
+const fs = require('fs');
 
 export class QkmsAdapter {
   private config: IQkmsAdapterConfig;

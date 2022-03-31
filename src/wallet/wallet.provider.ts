@@ -1,7 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { QkmsAccount } from 'src/core/qkms/QkmsAccount';
 import { User } from 'src/user/user.entity';
-import { UserProvider } from 'src/user/user.provider';
 import { CreateWalletDto } from './dto/wallet.dto';
 import { Wallet } from './wallet.entity';
 import { WaleltRepository } from './wallet.repository';
@@ -14,10 +13,8 @@ export class WalletProvider {
 
   constructor(
     private readonly walletRepository: WaleltRepository,
-    private readonly userprovider: UserProvider,
   ) {
     const qkmsAdapterConfigs = config.get('qkms.adapter');
-    console.log(qkmsAdapterConfigs);
     
     const qkmsAdapter = new QkmsAdapter(qkmsAdapterConfigs);
     this.qkmsAccounts = new QkmsAccount(qkmsAdapter);
@@ -42,7 +39,7 @@ export class WalletProvider {
     const result = await this.qkmsAccounts.createAccount(
       createWalletDto.walletName,
     );
-    
+
     const walletData: Wallet = {
       walletName: createWalletDto.walletName,
       address: result.address,
