@@ -27,5 +27,9 @@
       "private_key": "",
       "address": ""
     }
+  },
+  "clancy": {
+    "abiPath": "./store/contracts/clancy/ClancyNFT.json",
+    "address": "0x0069331Fa31aE85550FCC3314beec68e1EAa9a17"
   }
 }
