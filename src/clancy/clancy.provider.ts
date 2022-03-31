@@ -13,7 +13,7 @@ import {
   RemovePresignerDto,
   RevokeRoleDto,
 } from './dto/clancy.dto';
-import { User } from 'src/user/user.entity';
+import { Users } from 'src/user/user.entity';
 import { WalletProvider } from 'src/wallet/wallet.provider';
 import { ClancyRoleCOnstants } from './constants/clancy.constants';
 
@@ -45,7 +45,7 @@ export class ClancyProvider {
     );
   }
 
-  async grantRole(grantRoleDto: GrantRoleDto, user: User) {
+  async grantRole(grantRoleDto: GrantRoleDto, user: Users) {
     const wallet = await this.walletProvider.getWalletByAddress(grantRoleDto.account)
     if (wallet.user.id !== user.id) {
       throw new UnauthorizedException('User is not authorized for this wallet')
@@ -61,7 +61,7 @@ export class ClancyProvider {
     return result;
   }
 
-  async revokeRole(revokeRoleDto: RevokeRoleDto, user: User) {
+  async revokeRole(revokeRoleDto: RevokeRoleDto, user: Users) {
     const wallet = await this.walletProvider.getWalletByAddress(revokeRoleDto.account)
     if (wallet.user.id !== user.id) {
       throw new UnauthorizedException('User is not authorized for this wallet')
@@ -81,7 +81,7 @@ export class ClancyProvider {
 
   async getPresigner(account: string) {}
 
-  async addPresigner(addPresignerDto: AddPresignerDto, user: User) {
+  async addPresigner(addPresignerDto: AddPresignerDto, user: Users) {
     const wallet = await this.walletProvider.getWalletByAddress(addPresignerDto.account)
     if (wallet.user.id !== user.id) {
       throw new UnauthorizedException('User is not authorized for this wallet')
@@ -97,7 +97,7 @@ export class ClancyProvider {
     return result;
   }
 
-  async removePresigner(removePresignerDto: RemovePresignerDto, user: User) {
+  async removePresigner(removePresignerDto: RemovePresignerDto, user: Users) {
     const wallet = await this.walletProvider.getWalletByAddress(removePresignerDto.account)
     if (wallet.user.id !== user.id) {
       throw new UnauthorizedException('User is not authorized for this wallet')
@@ -113,7 +113,7 @@ export class ClancyProvider {
     return result;
   }
 
-  grantBySignature = async (grantRoleBySignatureDto: GrantBySignatureDto, user: User) => {
+  grantBySignature = async (grantRoleBySignatureDto: GrantBySignatureDto, user: Users) => {
     const result = await this.qkmsContract.sendEthTransaction(
       this.account.address,
       'grantRoleBySignature',

@@ -1,6 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as config from 'config';
-import { User } from 'src/user/user.entity';
+import { Users } from 'src/user/user.entity';
 import { Wallet } from 'src/wallet/wallet.entity';
 
 export const TypeOrmConfig: TypeOrmModuleOptions = {
@@ -10,6 +10,6 @@ export const TypeOrmConfig: TypeOrmModuleOptions = {
   database: config.get('db.database'),
   username: config.get('db.username'),
   password: config.get('db.password'),
-  entities: [User, Wallet],
+  entities: [Users, Wallet],
   synchronize: config.get('db.synchronize'),
 };

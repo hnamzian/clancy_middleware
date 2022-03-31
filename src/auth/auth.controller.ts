@@ -1,6 +1,5 @@
 import { Body, Controller, Post, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/user/user.entity';
 import { AuthProvider } from './auth.provider';
 import { ChangePasswordDto, LoginDto } from './dto/auth.dto';
 

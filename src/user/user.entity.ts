@@ -15,7 +15,7 @@ export enum UserRole {
 
 @Entity()
 @Unique(['id'])
-export class User extends BaseEntity {
+export class Users extends BaseEntity {
   @PrimaryGeneratedColumn() id: number;
   @Column({ type: String, nullable: false, unique: true }) username: string;
   @Column({ type: String, nullable: false }) password: string;

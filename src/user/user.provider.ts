@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/user.dto';
-import { User } from './user.entity';
+import { Users } from './user.entity';
 import { UserRepository } from './user.repository';
 import * as bcrypt from 'bcrypt';
 
@@ -37,7 +37,7 @@ export class UserProvider {
       password: this.hashPassword(createUserDto.password),
       role: createUserDto.role,
       isVerified: createUserDto.isVerified || false,
-    } as User;
+    } as Users;
 
     const user = this.userRepository.create(userData);
     await user.save();

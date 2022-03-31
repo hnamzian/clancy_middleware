@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { QkmsAccount } from 'src/core/qkms/QkmsAccount';
-import { User } from 'src/user/user.entity';
+import { Users } from 'src/user/user.entity';
 import { CreateWalletDto } from './dto/wallet.dto';
 import { Wallet } from './wallet.entity';
 import { WaleltRepository } from './wallet.repository';
@@ -28,7 +28,7 @@ export class WalletProvider {
     return await this.walletRepository.findOne({ address: walletAddress })
   }
 
-  createWallet = async (createWalletDto: CreateWalletDto, user: User) => {
+  createWallet = async (createWalletDto: CreateWalletDto, user: Users) => {
     if (await this.walletRepository.findOne({
       user,
       walletName: createWalletDto.walletName
