@@ -10,7 +10,7 @@
   },
   "jwt": {
     "secret": "weakSecret",
-    "expiration": "600s"
+    "expiration": "60000s"
   },
   "logs": {
     "error": {
