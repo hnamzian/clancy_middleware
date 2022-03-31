@@ -15,7 +15,7 @@ import {
 } from './dto/clancy.dto';
 import { Users } from 'src/user/user.entity';
 import { WalletProvider } from 'src/wallet/wallet.provider';
-import { ClancyRoleCOnstants } from './constants/clancy.constants';
+import { ClancyRoleConstants } from './constants/clancy.constants';
 
 @Injectable()
 export class ClancyProvider {
@@ -29,7 +29,7 @@ export class ClancyProvider {
     const qkmsNodeConfig: IQkmsNodeConfig = config.get('qkms.nodes.clancy');
 
     const clancyContractAddress = config.get('clancy.address');
-    const clancyABI = JSON.parse(
+    const { abi: clancyABI } = JSON.parse(
       fs.readFileSync(config.get('clancy.abiPath')).toString(),
     );
 
@@ -46,35 +46,39 @@ export class ClancyProvider {
   }
 
   async grantRole(grantRoleDto: GrantRoleDto, user: Users) {
-    const wallet = await this.walletProvider.getWalletByAddress(grantRoleDto.account)
-    if (wallet.user.id !== user.id) {
-      throw new UnauthorizedException('User is not authorized for this wallet')
-    }
+    const signer = await this.walletProvider.getWalletByUserId(user.id)
+    
+    // const wallet = await this.walletProvider.getWalletByAddress(grantRoleDto.account)
+    // if (!wallet.user || wallet.user.id !== user.id) {
+    //   throw new UnauthorizedException('User is not authorized for this wallet')
+    // }
 
     const result = await this.qkmsContract.sendEthTransaction(
-      wallet.address,
+      signer.address,
       'grantRole',
-      [ClancyRoleCOnstants[grantRoleDto.role], grantRoleDto.account],
+      [ClancyRoleConstants[grantRoleDto.role], grantRoleDto.account],
       '0x0',
     );
-
+    
     return result;
   }
 
   async revokeRole(revokeRoleDto: RevokeRoleDto, user: Users) {
-    const wallet = await this.walletProvider.getWalletByAddress(revokeRoleDto.account)
-    if (wallet.user.id !== user.id) {
-      throw new UnauthorizedException('User is not authorized for this wallet')
-    }
+    const signer = await this.walletProvider.getWalletByUserId(user.id)
 
-    const result = await this.qkmsContract.sendEthTransaction(
-      wallet.address,
+    // const wallet = await this.walletProvider.getWalletByAddress(revokeRoleDto.account)
+    // if (wallet.user.id !== user.id) {
+    //   throw new UnauthorizedException('User is not authorized for this wallet')
+    // }
+
+    const receipt = await this.qkmsContract.sendEthTransaction(
+      signer.address,
       'revokeRole',
-      [ClancyRoleCOnstants[revokeRoleDto.role], revokeRoleDto.account],
+      [ClancyRoleConstants[revokeRoleDto.role], revokeRoleDto.account],
       '0x0',
     );
 
-    return result;
+    return receipt;
   }
 
   async presigner() {}
@@ -82,13 +86,15 @@ export class ClancyProvider {
   async getPresigner(account: string) {}
 
   async addPresigner(addPresignerDto: AddPresignerDto, user: Users) {
-    const wallet = await this.walletProvider.getWalletByAddress(addPresignerDto.account)
-    if (wallet.user.id !== user.id) {
-      throw new UnauthorizedException('User is not authorized for this wallet')
-    }
+    const signer = await this.walletProvider.getWalletByUserId(user.id)
+    
+    // const wallet = await this.walletProvider.getWalletByAddress(addPresignerDto.account)
+    // if (wallet.user.id !== user.id) {
+    //   throw new UnauthorizedException('User is not authorized for this wallet')
+    // }
 
     const result = await this.qkmsContract.sendEthTransaction(
-      wallet.address,
+      signer.address,
       'revokeRole',
       [addPresignerDto.account],
       '0x0',
@@ -98,13 +104,15 @@ export class ClancyProvider {
   }
 
   async removePresigner(removePresignerDto: RemovePresignerDto, user: Users) {
-    const wallet = await this.walletProvider.getWalletByAddress(removePresignerDto.account)
-    if (wallet.user.id !== user.id) {
-      throw new UnauthorizedException('User is not authorized for this wallet')
-    }
+    const signer = await this.walletProvider.getWalletByUserId(user.id)
+
+    // const wallet = await this.walletProvider.getWalletByAddress(removePresignerDto.account)
+    // if (wallet.user.id !== user.id) {
+    //   throw new UnauthorizedException('User is not authorized for this wallet')
+    // }
 
     const result = await this.qkmsContract.sendEthTransaction(
-      wallet.address,
+      signer.address,
       'revokeRole',
       [removePresignerDto.account],
       '0x0',
@@ -114,8 +122,10 @@ export class ClancyProvider {
   }
 
   grantBySignature = async (grantRoleBySignatureDto: GrantBySignatureDto, user: Users) => {
+    const signer = await this.walletProvider.getWalletByUserId(user.id)
+    
     const result = await this.qkmsContract.sendEthTransaction(
-      this.account.address,
+      signer.address,
       'grantRoleBySignature',
       [],
       '0x0',
